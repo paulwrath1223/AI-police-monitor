@@ -2,17 +2,14 @@
 import wave
 from datetime import datetime as dt
 import os
+from transcriber import transcribe
 
 folder_name = "transmission history"
 
 
-def transcribe(audio_file_name):
-    return "demo transcript"
-
-
 def save_and_transcribe_audio(audio, sample_width, sample_rate=44100, channels=1):
     time = dt.now()
-    stringtime = time.strftime("%m-%d-%Y_%H-%M-%S")
+    stringtime = time.strftime("%m-%d-%Y/%H-%M-%S")
     file_base = folder_name + "/" + stringtime + "_police_message/"
 
     os.mkdir(file_base)

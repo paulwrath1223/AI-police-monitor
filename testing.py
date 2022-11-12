@@ -33,7 +33,6 @@ for i in range(0, numdevices):
 
 print('Recording')
 
-
 stream = p.open(format=sample_format,
                 channels=channels,
                 rate=fs,
@@ -55,19 +54,16 @@ for i in range(0, int(fs / chunk * seconds)):
         else:
             chunk_buffer.extend(data)
             save_and_transcribe_audio(chunk_buffer, sample_width, sample_rate=fs, channels=channels)
-
     else:
         chunk_buffer.extend(data)
     # if i == 20:
     #     for j in range(chunk):
     #         print(data[j], end=",")
 
-
 # Stop and close the stream
 stream.stop_stream()
 stream.close()
 # Terminate the PortAudio interface
 p.terminate()
-
 
 print('Finished recording')
