@@ -59,8 +59,10 @@ for i in range(0, int(fs / chunk * seconds)):
         else:
             chunk_buffer.append(data)
 
-            asyncio.run(save_and_transcribe_audio(chunk_buffer, sample_width,
+            chunk_out = chunk_buffer[:]
+            asyncio.run(save_and_transcribe_audio(chunk_out, sample_width,
                                                   bot, dp, sample_rate=fs, channels=channels))
+            chunk_buffer = [data]
     else:
 
         chunk_buffer.append(data)

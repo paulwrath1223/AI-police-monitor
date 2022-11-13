@@ -12,6 +12,9 @@ folder_name = "transmission history"
 
 async def save_and_transcribe_audio(audio, sample_width, bot, dp, sample_rate=44100, channels=1):
     # print("running1")
+
+    converted_audio = b''.join(audio)
+
     time = dt.now()
     stringtime = time.strftime("%m-%d-%Y/%H-%M-%S")
     file_base = folder_name + "/" + stringtime + "_police_message/"
@@ -25,7 +28,7 @@ async def save_and_transcribe_audio(audio, sample_width, bot, dp, sample_rate=44
     wf.setnchannels(channels)
     wf.setsampwidth(sample_width)
     wf.setframerate(sample_rate)
-    wf.writeframes(b''.join(audio))
+    wf.writeframes(converted_audio)
     wf.close()
     # print("running2")
     transcript = transcribe(audio_file_name)
