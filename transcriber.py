@@ -14,4 +14,3 @@ def transcribe(audio_file_name):
     return r.recognize_google(audio)
 
 
-print(transcribe("test.wav"))
