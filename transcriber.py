@@ -9,8 +9,9 @@ def transcribe(audio_file_name):
     with sr.AudioFile(audio_file_name) as source:
         audio = r.record(source)  # read the entire audio file
 
-    r.recognize_google(audio)
-
-    return r.recognize_google(audio)
-
+    try:
+        transcript = r.recognize_google(audio)
+    except sr.UnknownValueError:
+        transcript = "No words detected"
+    return transcript
 

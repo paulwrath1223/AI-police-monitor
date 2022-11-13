@@ -2,4 +2,4 @@
 # in effect a squelch algorithm
 
 def is_silence(audio):
-    return max(audio) < 10000
+    return max(audio) < 10

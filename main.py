@@ -8,7 +8,7 @@ sample_format = pyaudio.paInt16  # 16 bits per sample
 
 channels = 1
 fs = 44100  # Record at 44100 samples per second
-seconds = 10
+seconds = 30
 
 last_chunk_silent = True
 chunk_silent = True
@@ -19,7 +19,8 @@ info = p.get_host_api_info_by_index(0)
 num_devices = info.get('deviceCount')
 
 for i in range(0, num_devices):
-    print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
+    if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
+        print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
 
 
 print("\nenter ID of desired input device:")
@@ -37,7 +38,7 @@ stream = p.open(format=sample_format,
                 input=True,
                 input_device_index=idi)
 
-frames = []  # Initialize array to store frames
+
 sample_width = p.get_sample_size(sample_format)
 # Store data in chunks for 3 seconds
 
@@ -47,13 +48,14 @@ for i in range(0, int(fs / chunk * seconds)):
     chunk_silent = is_silence(data)
     if chunk_silent:
         if last_chunk_silent:
-            chunk_buffer = data
+            chunk_buffer = [data]
         else:
-            chunk_buffer.extend(data)
+            chunk_buffer.append(data)
+
             asyncio.run(save_and_transcribe_audio(chunk_buffer, sample_width, sample_rate=fs, channels=channels))
     else:
-        print("not silent")
-        chunk_buffer.extend(data)
+
+        chunk_buffer.append(data)
 
 
 # Stop and close the stream
