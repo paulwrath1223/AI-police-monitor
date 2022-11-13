@@ -4,7 +4,8 @@ from is_silence import is_silence
 from save_and_transcribe_audio import save_and_transcribe_audio
 from aiogram import Bot, Dispatcher, types
 
-api_token = '5521582028:AAHhcjwmynN2tCMLnJCqcjv429eqUqifmOM'
+api_token = ''
+
 
 bot = Bot(token=api_token, parse_mode=types.ParseMode.HTML)
 dp = Dispatcher(bot)
