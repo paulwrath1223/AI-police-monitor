@@ -2,6 +2,12 @@ import pyaudio
 import asyncio
 from is_silence import is_silence
 from save_and_transcribe_audio import save_and_transcribe_audio
+from aiogram import Bot, Dispatcher, types
+
+api_token = '5521582028:AAHhcjwmynN2tCMLnJCqcjv429eqUqifmOM'
+
+bot = Bot(token=api_token, parse_mode=types.ParseMode.HTML)
+dp = Dispatcher(bot)
 
 chunk = 1024  # Record in chunks of 1024 samples
 sample_format = pyaudio.paInt16  # 16 bits per sample
@@ -52,7 +58,8 @@ for i in range(0, int(fs / chunk * seconds)):
         else:
             chunk_buffer.append(data)
 
-            asyncio.run(save_and_transcribe_audio(chunk_buffer, sample_width, sample_rate=fs, channels=channels))
+            asyncio.run(save_and_transcribe_audio(chunk_buffer, sample_width,
+                                                  bot, dp, sample_rate=fs, channels=channels))
     else:
 
         chunk_buffer.append(data)

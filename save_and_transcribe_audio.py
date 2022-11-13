@@ -10,7 +10,7 @@ import asyncio
 folder_name = "transmission history"
 
 
-async def save_and_transcribe_audio(audio, sample_width, sample_rate=44100, channels=1):
+async def save_and_transcribe_audio(audio, sample_width, bot, dp, sample_rate=44100, channels=1):
     # print("running1")
     time = dt.now()
     stringtime = time.strftime("%m-%d-%Y/%H-%M-%S")
@@ -42,7 +42,7 @@ async def save_and_transcribe_audio(audio, sample_width, sample_rate=44100, chan
     # print("running4")
     for keyword in keywords:
         if keyword in transcript:
-            notify(file_base, keyword)
+            notify(file_base, keyword, bot, dp)
 
 
 
