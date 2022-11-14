@@ -43,10 +43,16 @@ async def save_and_transcribe_audio(audio, sample_width, bot, dp, sample_rate=44
     dic = dict(json.loads(output))
     keywords = list(dic)
     # print("running4")
+    present_keywords = []
     for keyword in keywords:
         if keyword in transcript:
-            notify(file_base, keyword, bot, dp)
+            if keyword not in present_keywords:
+                present_keywords.append(keyword)
 
+    if len(present_keywords) >= 1:
+        notify(file_base, bot, dp, keywords=present_keywords)
+
+    notify(file_base, bot, dp, no_trigger=True)
 
 
 

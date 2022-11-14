@@ -49,7 +49,8 @@ stream = p.open(format=sample_format,
 sample_width = p.get_sample_size(sample_format)
 # Store data in chunks for 3 seconds
 
-for i in range(0, int(fs / chunk * seconds)):
+# for i in range(0, int(fs / chunk * seconds)):
+while True:
     last_chunk_silent = chunk_silent
     data = stream.read(chunk)
     chunk_silent = is_silence(data)
@@ -68,10 +69,10 @@ for i in range(0, int(fs / chunk * seconds)):
         chunk_buffer.append(data)
 
 
-# Stop and close the stream
-stream.stop_stream()
-stream.close()
-# Terminate the PortAudio interface
-p.terminate()
-
-print('Finished recording')
+# # Stop and close the stream
+# stream.stop_stream()
+# stream.close()
+# # Terminate the PortAudio interface
+# p.terminate()
+#
+# print('Finished recording')

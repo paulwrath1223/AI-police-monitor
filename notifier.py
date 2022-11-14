@@ -4,14 +4,24 @@ import asyncio
 from aiogram.utils import exceptions, executor
 from aiogram import Bot, Dispatcher, types
 
+# TODO: send audio file
 
-def notify(path, keyword, bot, dp):
 
+def notify(path, bot, dp, keywords=None, no_trigger=False):
+
+    if keywords is None:
+        if no_trigger:
+            keywords = ["any"]
     a_file = open("keywords.json", "r")
     output = a_file.read()
     a_file.close()
     dic = dict(json.loads(output))
-    targets = (dic[keyword]).split(",")
+    targets = []
+    for keyword in keywords:
+        temp_targets = ((dic[keyword]).replace(" ","").split(","))
+        for temp_target in temp_targets:
+            if temp_target not in targets:
+                targets.append(temp_target)
 
     with open((path + "transcript.txt"), "r") as f:
         transcript_list = f.readlines()
@@ -20,14 +30,20 @@ def notify(path, keyword, bot, dp):
     for line in transcript_list:
         transcript += (line + "\n")
 
-    if keyword == "any":
+    if no_trigger:
         message = "New message: \"" + transcript + "\""
         for target in targets:
             executor.start(dp, send_message(bot, target, message, True))
             print("pretend I notify " + target + " with message \"" + message + "\".")
     else:
-        message = "Keyword \"" + keyword + "\" detected: \"" + transcript + "\""
+
         for target in targets:
+            keywords_present = []
+            for keyword in keywords:
+                if target in ((dic[keyword]).replace(" ", "").split(",")):
+                    keywords_present.append(keyword)
+            string_keywords_present = ", ".join(keywords_present)
+            message = "Keywords \"" + string_keywords_present + "\" detected in: \"" + transcript + "\""
             executor.start(dp, send_message(bot, target, message))
             print("pretend I notify " + target + " with message \"" + message + "\".")
 
