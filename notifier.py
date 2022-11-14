@@ -67,7 +67,7 @@ async def send_message(bot_in, user_id: int, text: str, disable_notification: bo
     except exceptions.RetryAfter as e:
         print(f"Target [ID:{user_id}]: Flood limit is exceeded. Sleep {e.timeout} seconds.")
         await asyncio.sleep(e.timeout)
-        return await send_message(user_id, text)  # Recursive call
+        return await send_message(bot_in, user_id, text, disable_notification=disable_notification)  # Recursive call
     except exceptions.UserDeactivated:
         print(f"Target [ID:{user_id}]: user is deactivated")
     except exceptions.TelegramAPIError:
