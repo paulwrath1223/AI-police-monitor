@@ -31,6 +31,10 @@ async def save_and_transcribe_audio(audio, sample_width, bot, dp, sample_rate=44
     wf.writeframes(converted_audio)
     wf.close()
     # print("running2")
+
+    # TODO: upload to drive here (https://developers.google.com/drive/api/guides/manage-uploads#simple)
+    #  , add "webViewLink" from returned file object to end of transcript history
+
     transcript = transcribe(audio_file_name)
 
     with open(transcript_file_name, 'w') as f:
