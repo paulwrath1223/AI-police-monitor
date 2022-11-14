@@ -2,4 +2,8 @@
 # in effect a squelch algorithm
 
 def is_silence(audio):
-    return max(audio) < 10
+    for byte in audio:
+        if 30 < byte < 225:
+            print(byte)
+            return False
+    return True
