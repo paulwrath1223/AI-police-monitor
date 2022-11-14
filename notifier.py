@@ -33,7 +33,7 @@ def notify(path, bot, dp, keywords=None, no_trigger=False):
     if no_trigger:
         message = "New message: \"" + transcript + "\""
         for target in targets:
-            executor.start(dp, send_message(bot, target, message, True))
+            # executor.start(dp, send_message(bot, target, message, True))
             print("pretend I notify " + target + " with message \"" + message + "\".")
     else:
 
@@ -44,7 +44,7 @@ def notify(path, bot, dp, keywords=None, no_trigger=False):
                     keywords_present.append(keyword)
             string_keywords_present = ", ".join(keywords_present)
             message = "Keywords \"" + string_keywords_present + "\" detected in: \"" + transcript + "\""
-            executor.start(dp, send_message(bot, target, message))
+            # executor.start(dp, send_message(bot, target, message))
             print("pretend I notify " + target + " with message \"" + message + "\".")
 
 

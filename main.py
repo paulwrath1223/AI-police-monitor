@@ -26,8 +26,9 @@ info = p.get_host_api_info_by_index(0)
 num_devices = info.get('deviceCount')
 
 for i in range(0, num_devices):
-    if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
-        print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
+    # if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
+    print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'), ", ",
+          p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels'))
 
 
 print("\nenter ID of desired input device:")
@@ -56,17 +57,17 @@ while True:
     chunk_silent = is_silence(data)
     if chunk_silent:
         if last_chunk_silent:
-            chunk_buffer = [data]
+            chunk_buffer = [bytes(data)]
         else:
-            chunk_buffer.append(data)
+            chunk_buffer.append(bytes(data))
 
             chunk_out = chunk_buffer[:]
             asyncio.run(save_and_transcribe_audio(chunk_out, sample_width,
                                                   bot, dp, sample_rate=fs, channels=channels))
-            chunk_buffer = [data]
+            chunk_buffer = [bytes(data)]
     else:
-
-        chunk_buffer.append(data)
+        print("not silence")
+        chunk_buffer.append(bytes(data))
 
 
 # # Stop and close the stream
