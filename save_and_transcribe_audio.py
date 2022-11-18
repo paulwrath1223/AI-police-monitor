@@ -11,7 +11,7 @@ folder_name = "transmission history"
 
 
 async def save_and_transcribe_audio(audio, sample_width, bot, dp, sample_rate=48000, channels=1):
-    # print("running1")
+    print("running1")
 
     converted_audio = b''.join(audio)
 
@@ -20,6 +20,8 @@ async def save_and_transcribe_audio(audio, sample_width, bot, dp, sample_rate=48
     file_base = folder_name + "/" + stringtime + "_police_message/"
 
     os.makedirs(file_base)
+
+    print(f"made path at {file_base}")
 
     audio_file_name = file_base + "audio recording.wav"
     transcript_file_name = file_base + "transcript.txt"
@@ -30,7 +32,7 @@ async def save_and_transcribe_audio(audio, sample_width, bot, dp, sample_rate=48
     wf.setframerate(sample_rate)
     wf.writeframes(converted_audio)
     wf.close()
-    # print("running2")
+    print("running2")
 
     # TODO: upload to drive here (https://developers.google.com/drive/api/guides/manage-uploads#simple)
     #  , add "webViewLink" from returned file object to end of transcript history
@@ -40,13 +42,13 @@ async def save_and_transcribe_audio(audio, sample_width, bot, dp, sample_rate=48
     with open(transcript_file_name, 'w') as f:
         f.write(transcript)
     f.close()
-    # print("running3")
+    print("running3")
     a_file = open("keywords.json", "r")
     output = a_file.read()
     a_file.close()
     dic = dict(json.loads(output))
     keywords = list(dic)
-    # print("running4")
+    print("running4")
     present_keywords = []
     for keyword in keywords:
         if keyword in transcript:

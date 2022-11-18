@@ -7,6 +7,7 @@ from os import path
 def transcribe(audio_file_name):
     r = sr.Recognizer()
     with sr.AudioFile(audio_file_name) as source:
+        r.adjust_for_ambient_noise(source, duration=0.2)
         audio = r.record(source)  # read the entire audio file
 
     try:

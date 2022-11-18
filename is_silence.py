@@ -4,6 +4,6 @@
 def is_silence(audio):
     for byte in audio:
         if 30 < byte < 225:
-            print(byte)
+
             return False
     return True
